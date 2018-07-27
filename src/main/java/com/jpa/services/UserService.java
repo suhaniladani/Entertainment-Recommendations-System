@@ -1,7 +1,10 @@
 package com.jpa.services;
 
+
 import java.util.List;
 import java.util.Optional;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,10 +27,10 @@ public class UserService {
 	@Autowired
 	UserRepository userRepository;
 
-	@PostMapping("/api/user")
-	public User createUser(@RequestBody User user) {
-		return userRepository.save(user);
-	}
+//	@PostMapping("/api/user")
+//	public User createUser(@RequestBody User user) {
+//		return userRepository.save(user);
+//	}
 	
 	@DeleteMapping("/api/user/{userId}")
 	public void deleteUser(@PathVariable("userId") int id) {
@@ -52,19 +55,49 @@ public class UserService {
 		return null;
 	}
 
+
+	@PostMapping("/api/register")
+	public User register(@RequestBody User user, HttpSession session) {
+		session.setAttribute("currentUser", user);
+		return userRepository.save(user);
+	}
 	
-//	@GetMapping("/user")
-//	public List<User> findAllUser(
-//			@RequestParam(name="username", required=false) String username,
-//			@RequestParam(name="password", required=false) String password
-//			) {
-//		if(username != null && password != null) {
-//			return (List<User>) userRepository.findUserByCredentials(username, password);
-//		} 
-//		else if(username != null) {
-//			return (List<User>) userRepository.findUserByUsername(username);
-//		}
-//		return (List<User>) userRepository.findAll();
-//	}
+
+	@GetMapping("/api/username")
+	public List<User> findUserByUsername(@RequestParam(name="username", required=false) String username) {
+			return (List<User>) userRepository.findUserByUsername(username);
+
+	}
+	
+	@GetMapping("/api/profile")
+	public User profile(HttpSession session) {
+	User currentUser = (User)
+	session.getAttribute("currentUser");	
+	return currentUser;
+	}
+	
+	@PostMapping("/api/logout")
+	public void logout
+	(HttpSession session) {
+		session.invalidate();
+	}
+
+	List<User> users = (List<User>) userRepository.findAll();
+	
+	@PostMapping("/api/login")
+	public User login(@RequestBody User credentials,
+	HttpSession session) {
+	 for (User user : users) {
+	  if( user.getUsername().equals(credentials.getUsername()) &&
+	      user.getPassword().equals(credentials.getPassword())) {
+	   session.setAttribute("currentUser", user);
+	   return user;
+	  }
+	 }
+	 return null;
+	}
+
+	
+	
 
 }

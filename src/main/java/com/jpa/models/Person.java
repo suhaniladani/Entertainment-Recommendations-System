@@ -1,11 +1,13 @@
 package com.jpa.models;
 
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
@@ -18,6 +20,7 @@ public class Person {
 	private String lastName;
 	private String username;
 	private String password;
+	private String passwordConfirm;
 	
 	public int getId() {
 		return id;
@@ -49,6 +52,14 @@ public class Person {
 	}
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+	
+	
+	public String getPasswordConfirm() {
+		return passwordConfirm;
+	}
+	public void setPasswordConfirm(String passwordConfirm) {
+		this.passwordConfirm = passwordConfirm;
 	}
 	public Person(String firstName, String lastName, String username, String password) {
 		super();
