@@ -23,24 +23,33 @@ import com.jpa.repositories.UserRepository;
 @CrossOrigin(origins = "*")
 @RestController
 public class UserService {
-
+	
 	@Autowired
 	UserRepository userRepository;
+	
+	@PostMapping("/register")
+	public User register(@RequestBody User user, HttpSession session) {
+		
+		User cu = userRepository.save(user);
+		
+		session.setAttribute("currentUser", cu);
+		
+		return cu;
+	}
+	
+	@GetMapping("/profile")
+	public Optional<User> profile(HttpSession session) {
+		User currentUser = (User) session.getAttribute("currentUser");
+		return userRepository.findById(currentUser.getId());
+	}
+	
+	@PostMapping("/login")
+	public User login(@RequestBody User user, HttpSession session) {
+		user = userRepository.findUserByCredentials(user.getUsername(), user.getPassword());
+		session.setAttribute("currentUser", user);
+		return user;
+	}
 
-//	@PostMapping("/api/user")
-//	public User createUser(@RequestBody User user) {
-//		return userRepository.save(user);
-//	}
-	
-	@DeleteMapping("/api/user/{userId}")
-	public void deleteUser(@PathVariable("userId") int id) {
-		userRepository.deleteById(id);
-	}
-	
-	@GetMapping("/user/{userId}")
-	public Optional<User> findUserById(@PathVariable("userId") int id) {
-		return userRepository.findById(id);
-	}
 	
 	@PutMapping("/api/user/{userId}")
 	public User updateUser(
@@ -50,54 +59,26 @@ public class UserService {
 		if(optional.isPresent()) {
 			User user = optional.get();
 			user.setFirstName(newUser.getFirstName());
+			user.setLastName(newUser.getLastName());
 			return userRepository.save(user);
 		}
 		return null;
 	}
-
-
-	@PostMapping("/api/register")
-	public User register(@RequestBody User user, HttpSession session) {
-		session.setAttribute("currentUser", user);
-		return userRepository.save(user);
+	
+	@GetMapping("/api/user/{userId}")
+	public Optional<User> findUserByUserId(@PathVariable("userId") String userId) {
+		int id = Integer.parseInt(userId);
+		return userRepository.findById(id);
 	}
 	
-
-	@GetMapping("/api/username")
-	public List<User> findUserByUsername(@RequestParam(name="username", required=false) String username) {
-			return (List<User>) userRepository.findUserByUsername(username);
-
+	@DeleteMapping("/api/user/{userId}")
+	public void deleteUser(@PathVariable("userId") int id) {
+		userRepository.deleteById(id);
 	}
 	
-	@GetMapping("/api/profile")
-	public User profile(HttpSession session) {
-	User currentUser = (User)
-	session.getAttribute("currentUser");	
-	return currentUser;
+	@GetMapping("/api/user")
+	public List<User> findAllUsers() {
+		return (List<User>) userRepository.findAll();
 	}
 	
-	@PostMapping("/api/logout")
-	public void logout
-	(HttpSession session) {
-		session.invalidate();
-	}
-
-	List<User> users = (List<User>) userRepository.findAll();
-	
-	@PostMapping("/api/login")
-	public User login(@RequestBody User credentials,
-	HttpSession session) {
-	 for (User user : users) {
-	  if( user.getUsername().equals(credentials.getUsername()) &&
-	      user.getPassword().equals(credentials.getPassword())) {
-	   session.setAttribute("currentUser", user);
-	   return user;
-	  }
-	 }
-	 return null;
-	}
-
-	
-	
-
 }
