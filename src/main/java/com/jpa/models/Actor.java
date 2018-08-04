@@ -2,6 +2,9 @@ package com.jpa.models;
 
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.*;
 /**
  * Entity implementation class for Entity: Actor
@@ -17,7 +20,9 @@ public class Actor{
 
 	
 
-	@ManyToMany(mappedBy="actors", cascade=CascadeType.ALL)
+	@ManyToMany
+	@JoinTable(name="MOVIE2ACTOR")
+	@JsonIgnore
 	private List<Movie> moviesActed = new ArrayList();
 	
 

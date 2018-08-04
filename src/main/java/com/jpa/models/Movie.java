@@ -13,7 +13,6 @@ import javax.persistence.*;
  *
  */
 @Entity
-
 public class Movie{
 
 	@Id
@@ -37,6 +36,10 @@ public class Movie{
 	@ManyToMany
 	@JoinTable(name="MOVIE2USER")
 	private List<User> users = null;
+	
+	@ManyToMany
+	@JoinTable(name="MOVIE2SELLER")
+	private List<Seller> sellers = null;
 
 	public Movie() {
 		super();
@@ -80,6 +83,18 @@ public class Movie{
 		this.users = users;
 	}
 	
+	public List<Review> getReviews() {
+		return reviews;
+	}
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
+	}
+	public List<Seller> getSellers() {
+		return sellers;
+	}
+	public void setSellers(List<Seller> sellers) {
+		this.sellers = sellers;
+	}
 	public void setDirectors(List<Director> directors) {
 		this.directors = directors;
 		for(Director director: directors) {

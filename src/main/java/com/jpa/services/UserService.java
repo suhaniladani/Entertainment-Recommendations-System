@@ -14,22 +14,30 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+//import com.jpa.daos.UserDao;
 import com.jpa.models.User;
 import com.jpa.repositories.UserRepository;
+
 
 @CrossOrigin(origins = "*")
 @RestController
 public class UserService {
+//	
+//	@Autowired
+//	WebSecurityConfig webSecurity;
+//	
+//	@Autowired
+//	UserDao userDao;
 	
 	@Autowired
 	UserRepository userRepository;
 	
-	@PostMapping("/register")
+	@PostMapping("/api/register")
 	public User register(@RequestBody User user, HttpSession session) {
 		
+		//user.setPassword(userDao.encryptPassword(user.getPassword()));
 		User cu = userRepository.save(user);
 		
 		session.setAttribute("currentUser", cu);
@@ -80,5 +88,8 @@ public class UserService {
 	public List<User> findAllUsers() {
 		return (List<User>) userRepository.findAll();
 	}
+	
+	
+
 	
 }
