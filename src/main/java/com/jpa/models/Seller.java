@@ -21,8 +21,8 @@ public class Seller extends Person{
 		this.movies = movies;
 	}
 
-	public Seller(String firstName, String lastName, String username, String password, List<Movie> movies) {
-		super(firstName, lastName, username, password);
+	public Seller(String firstName, String lastName, String email, String password, List<Movie> movies) {
+		super(firstName, lastName, email, password);
 		this.movies = movies;
 	}
 
@@ -31,8 +31,8 @@ public class Seller extends Person{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Seller(String firstName, String lastName, String username, String password) {
-		super(firstName, lastName, username, password);
+	public Seller(String firstName, String lastName, String email, String password) {
+		super(firstName, lastName, email, password);
 		// TODO Auto-generated constructor stub
 	}
 	

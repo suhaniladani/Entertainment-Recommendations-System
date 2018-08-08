@@ -22,8 +22,8 @@ public class User extends Person{
 		// TODO Auto-generated constructor stub
 	}
 
-	public User(String firstName, String lastName, String username, String password) {
-		super(firstName, lastName, username, password);
+	public User(String firstName, String lastName, String email, String password) {
+		super(firstName, lastName, email, password);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -37,8 +37,8 @@ public class User extends Person{
 		this.movies = movies;
 	}
 
-	public User(String firstName, String lastName, String username, String password, List<Movie> movies) {
-		super(firstName, lastName, username, password);
+	public User(String firstName, String lastName, String email, String password, List<Movie> movies) {
+		super(firstName, lastName, email, password);
 		this.movies = movies;
 	}
 

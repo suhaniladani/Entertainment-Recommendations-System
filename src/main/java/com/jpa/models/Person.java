@@ -1,6 +1,7 @@
 package com.jpa.models;
 
 
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,7 +10,9 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 
+
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Person {
 	
 	@Id
@@ -17,9 +20,10 @@ public class Person {
 	private int id;
 	private String firstName;
 	private String lastName;
-	private String username;
+	private String email;
 	private String password;
-	private String passwordConfirm;
+
+
 	
 	public int getId() {
 		return id;
@@ -28,11 +32,11 @@ public class Person {
 		this.id = id;
 	}
 	
-	public String getUsername() {
-		return username;
+	public String getEmail() {
+		return email;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getPassword() {
 		return password;
@@ -53,18 +57,11 @@ public class Person {
 		this.lastName = lastName;
 	}
 	
-	
-	public String getPasswordConfirm() {
-		return passwordConfirm;
-	}
-	public void setPasswordConfirm(String passwordConfirm) {
-		this.passwordConfirm = passwordConfirm;
-	}
-	public Person(String firstName, String lastName, String username, String password) {
+	public Person(String firstName, String lastName, String email, String password) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.username = username;
+		this.email = email;
 		this.password = password;
 	}
 	public Person() {
