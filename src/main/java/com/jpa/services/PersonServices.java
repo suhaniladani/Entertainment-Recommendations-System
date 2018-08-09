@@ -37,6 +37,13 @@ public class PersonServices {
 		session.setAttribute("currentPerson", person);
 		return person;
 	}
+	
+	@PostMapping("/api/logout")
+	public void logout
+	(HttpSession session) {
+		session.invalidate();
+	}
+
 
 
 }
