@@ -11,7 +11,7 @@ public interface PersonRepository extends CrudRepository<Person, Integer>{
 	
 
 	@Query("SELECT person FROM Person person WHERE person.email=:email AND person.password=:password")
-	public User findPersonByCredentials(@Param("email") String e, @Param("password") String p);
+	public Person findPersonByCredentials(@Param("email") String e, @Param("password") String p);
 			
 
 }

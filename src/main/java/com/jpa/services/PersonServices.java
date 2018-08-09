@@ -31,7 +31,7 @@ public class PersonServices {
 //	}
 	
 	
-	@PostMapping("/login")
+	@PostMapping("/api/login")
 	public Person login(@RequestBody Person person, HttpSession session) {
 		person = personRepository.findPersonByCredentials(person.getEmail(), person.getPassword());
 		session.setAttribute("currentPerson", person);

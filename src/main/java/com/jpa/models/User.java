@@ -13,7 +13,7 @@ import com.jpa.models.Movie;
 public class User extends Person{
 	
 	@ManyToMany(mappedBy="users", cascade=CascadeType.ALL)
-	private List<Movie> movies = new ArrayList();
+	private List<Movie> movies;
 	
 	
 

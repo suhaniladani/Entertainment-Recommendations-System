@@ -22,6 +22,7 @@ public class Person {
 	private String lastName;
 	private String email;
 	private String password;
+	private String obj;
 
 
 	
@@ -66,6 +67,20 @@ public class Person {
 	}
 	public Person() {
 		super();
+	}
+	
+	public Person(String email, String password, String obj) {
+		super();
+		this.email = email;
+		this.password = password;
+		this.obj = obj;
+	}
+	
+	public Object getObj() {
+		return obj;
+	}
+	public void setObj(String obj) {
+		this.obj = obj;
 	}
 	
 	

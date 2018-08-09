@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jpa.models.Critic;
 import com.jpa.repositories.CriticRepository;
-import com.jpa.security.WebSecurityConfig;
+//import com.jpa.security.WebSecurityConfig;
 
 @CrossOrigin(origins = "*")
 @RestController
 public class CriticService {
 	
-	@Autowired
-	WebSecurityConfig webSecurity;
+//	@Autowired
+//	WebSecurityConfig webSecurity;
 	
 	@Autowired
 	CriticRepository criticRepository;

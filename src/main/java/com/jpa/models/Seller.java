@@ -11,7 +11,7 @@ import javax.persistence.ManyToMany;
 public class Seller extends Person{
 	
 	@ManyToMany(mappedBy="sellers", cascade=CascadeType.ALL)
-	private List<Movie> movies = new ArrayList();
+	private List<Movie> movies;
 
 	public List<Movie> getMovies() {
 		return movies;

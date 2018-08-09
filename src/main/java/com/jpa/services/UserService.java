@@ -16,21 +16,21 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jpa.daos.UserDao;
+//import com.jpa.daos.UserDao;
 import com.jpa.models.User;
 import com.jpa.repositories.UserRepository;
-import com.jpa.security.WebSecurityConfig;
+//import com.jpa.security.WebSecurityConfig;
 
 
 @CrossOrigin(origins = "*")
 @RestController
 public class UserService {
 
-	@Autowired
-	WebSecurityConfig webSecurity;
-	
-	@Autowired
-	UserDao userDao;
+//	@Autowired
+//	WebSecurityConfig webSecurity;
+//	
+//	@Autowired
+//	UserDao userDao;
 	
 	@Autowired
 	UserRepository userRepository;
