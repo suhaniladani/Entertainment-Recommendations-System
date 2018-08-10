@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jpa.models.Person;
-import com.jpa.models.User;
 import com.jpa.repositories.PersonRepository;
 
 @CrossOrigin(origins = "*")
@@ -36,6 +35,7 @@ public class PersonServices {
 		person = personRepository.findPersonByCredentials(person.getEmail(), person.getPassword());
 		session.setAttribute("currentPerson", person);
 		return person;
+		
 	}
 	
 	@PostMapping("/api/logout")

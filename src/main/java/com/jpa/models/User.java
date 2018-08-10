@@ -1,18 +1,22 @@
 package com.jpa.models;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
-import com.jpa.models.Movie;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 public class User extends Person{
 	
-	@ManyToMany(mappedBy="users", cascade=CascadeType.ALL)
+	@ManyToMany
+	@JsonIgnore
+	@JoinTable(name="USERTOMOVIE")
 	private List<Movie> movies;
 	
 	
@@ -27,7 +31,15 @@ public class User extends Person{
 		// TODO Auto-generated constructor stub
 	}
 
+	public void watchlistMovie(Movie movie) {
+		if(movie != null) {
+			this.movies.add(movie);
+			if(!movie.getUsers().contains(this)) {
+				movie.getUsers().add(this);
+			}
+		}
 	
+	}	
 
 	public List<Movie> getMovies() {
 		return movies;
@@ -43,6 +55,7 @@ public class User extends Person{
 	}
 
 
+	
 
 
 	

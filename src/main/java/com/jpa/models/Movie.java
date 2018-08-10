@@ -1,10 +1,18 @@
 package com.jpa.models;
 
 
-import java.lang.String;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 
@@ -19,6 +27,7 @@ public class Movie{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	private String title;
+	private String imdbid;
 
 	@OneToMany(mappedBy="movie")
 	private List<Review> reviews;
@@ -33,20 +42,21 @@ public class Movie{
 	private List<Director> directors = null;
 
 	
-	@ManyToMany
-	@JoinTable(name="MOVIE2USER")
+	@ManyToMany(mappedBy="movies", cascade=CascadeType.ALL)
 	private List<User> users = null;
 	
 	@ManyToMany
+	@JsonIgnore
 	@JoinTable(name="MOVIE2SELLER")
 	private List<Seller> sellers = null;
 
 	public Movie() {
 		super();
-	}   
-	public Movie(String title) {
-		this.title = title;
-	}
+	}  
+
+//	public Movie(String title) {
+//		this.title = title;
+//	}
 	public int getId() {
 		return this.id;
 	}
@@ -101,5 +111,18 @@ public class Movie{
 			director.getMoviesDirected().add(this);
 		}
 	}
+	public String getImdbid() {
+		return imdbid;
+	}
+	public void setImdbId(String imdbid) {
+		this.imdbid = imdbid;
+	}
+
+	public Movie(String imdbid) {
+		super();
+		this.imdbid = imdbid;
+	}
+	
+	
    
 }
