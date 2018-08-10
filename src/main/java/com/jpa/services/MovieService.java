@@ -18,15 +18,17 @@ public class MovieService {
 	@Autowired
 	MovieRepository movieRepository;
 	
-	@GetMapping("api/movie")
+	@GetMapping("/api/movie")
 	public Iterable<Movie> findAllMovies(){
 		return movieRepository.findAll();
 		
 	}
 	
-	@GetMapping("api/movie/{movieId}")
+	@GetMapping("/api/movie/{movieId}")
 	public Optional<Movie> findMovieById(@PathVariable("movieId") int id) {
 		return movieRepository.findById(id);
 	}
+	
+
 
 }

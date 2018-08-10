@@ -5,12 +5,14 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 @Entity
 public class Seller extends Person{
 	
-	@ManyToMany(mappedBy="sellers", cascade=CascadeType.ALL)
+	@ManyToMany
+	@JoinTable(name="SELLER2MOVIES")
 	private List<Movie> movies;
 
 	public List<Movie> getMovies() {

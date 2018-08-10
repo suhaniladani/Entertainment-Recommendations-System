@@ -45,9 +45,8 @@ public class Movie{
 	@ManyToMany(mappedBy="movies", cascade=CascadeType.ALL)
 	private List<User> users = null;
 	
-	@ManyToMany
+	@ManyToMany(mappedBy="movies", cascade=CascadeType.ALL)
 	@JsonIgnore
-	@JoinTable(name="MOVIE2SELLER")
 	private List<Seller> sellers = null;
 
 	public Movie() {

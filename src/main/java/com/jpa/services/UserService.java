@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import com.jpa.models.Movie;
 //import com.jpa.daos.UserDao;
 import com.jpa.models.User;
@@ -97,6 +96,7 @@ public class UserService {
 		return (List<User>) userRepository.findAll();
 	}
 	
+	
 	@PostMapping("/api/user/{uId}/movie")
 	public List<Movie> UserWatchlistMovie(
 			@PathVariable("uId") int uId,
@@ -148,9 +148,21 @@ public class UserService {
 		}
 		return empty;
 	}
+	
+	
+	@GetMapping("/api/user/{uId}/watchlist")
+	public Iterable<Movie> findMoviesInWatchlist(
+						@PathVariable("uId") int uId) {
+		Optional<User> ouser = userRepository.findById(uId);
+		if(ouser.isPresent()) {
+			User user = ouser.get();
+			return user.getMovies();
+		}
+		return null;
+	}
 }
 		
-		
+
 		
 		
 		

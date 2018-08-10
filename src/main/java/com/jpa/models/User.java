@@ -16,7 +16,7 @@ public class User extends Person{
 	
 	@ManyToMany
 	@JsonIgnore
-	@JoinTable(name="USERTOMOVIE")
+	@JoinTable(name="USER2MOVIE")
 	private List<Movie> movies;
 	
 	
