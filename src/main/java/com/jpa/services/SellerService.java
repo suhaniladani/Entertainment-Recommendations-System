@@ -14,11 +14,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jpa.models.Link;
 import com.jpa.models.Movie;
 import com.jpa.models.Seller;
 import com.jpa.models.User;
+import com.jpa.repositories.LinkRepository;
 import com.jpa.repositories.MovieRepository;
 import com.jpa.repositories.SellerRepository;
+
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -30,6 +33,9 @@ public class SellerService {
 	@Autowired
 	MovieRepository movieRepository;
 	
+	@Autowired
+	LinkRepository linkRepository;
+	
 	@PostMapping("/api/seller/register")
 	public Seller register(@RequestBody Seller seller, HttpSession session) {
 		
@@ -40,9 +46,19 @@ public class SellerService {
 		
 		return cs;
 	}
+
+//	@PostMapping("/api/seller/{sId}/movie/{mid}")
+//	public Link UserWatchlistMovie(
+//			@PathVariable("sId") int sId,
+//			@PathVariable("mid") int mid,
+//			@RequestBody Link link) {
+//	
+//		
+//		return linkRepository.save(link);
+//	}
 	
 	@PostMapping("/api/seller/{sId}/movie")
-	public List<Movie> UserWatchlistMovie(
+	public List<Movie> SellerSellList(
 			@PathVariable("sId") int sId,
 			@RequestBody Movie a) {
 		Optional<Seller> oseller = sellerRepository.findById(sId);
@@ -54,7 +70,7 @@ public class SellerService {
 		if(oseller.isPresent()) {
 			
 		System.out.println("user found");
-		Seller s = oseller.get();
+			Seller s = oseller.get();
 			List<Movie> movies = s.getMovies();
 			
 			if(omovie.isPresent()) {
@@ -93,6 +109,8 @@ public class SellerService {
 		return empty;
 	}
 	
+	
+	
 	@GetMapping("/api/seller/{sId}/movielist")
 	public Iterable<Movie> findMoviesToRent(
 						@PathVariable("sId") int sId) {
@@ -102,6 +120,20 @@ public class SellerService {
 			return seller.getMovies();
 		}
 		return null;
+	}
+	
+	@PostMapping("/api/movie/{imdbid}/link")
+	public Link createLink(
+			@PathVariable("imdbid") String imdbid,
+			@RequestBody Link link) {
+		Optional<Movie> omovie = movieRepository.findByImdbId(imdbid);
+		
+		if(omovie.isPresent()) {
+			Movie movie = omovie.get();
+			link.setMovie(movie);
+			return linkRepository.save(link);
+		}
+		return null;		
 	}
 
 }

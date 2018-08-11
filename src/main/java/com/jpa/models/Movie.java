@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -48,14 +49,15 @@ public class Movie{
 	@ManyToMany(mappedBy="movies", cascade=CascadeType.ALL)
 	@JsonIgnore
 	private List<Seller> sellers = null;
+	
+	@OneToMany(mappedBy = "movie")
+	@JsonIgnore
+	private List<Link> buyLink;
 
 	public Movie() {
 		super();
 	}  
 
-//	public Movie(String title) {
-//		this.title = title;
-//	}
 	public int getId() {
 		return this.id;
 	}
@@ -117,11 +119,21 @@ public class Movie{
 		this.imdbid = imdbid;
 	}
 
-	public Movie(String imdbid) {
-		super();
+
+	public void setImdbid(String imdbid) {
 		this.imdbid = imdbid;
 	}
-	
+
+	public List<Link> getBuyLink() {
+		return buyLink;
+	}
+
+	public void setBuyLink(List<Link> buyLink) {
+		this.buyLink = buyLink;
+	}
+
+
+
 	
    
 }

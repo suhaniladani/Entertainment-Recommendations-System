@@ -25,6 +25,14 @@ public class Critic extends Person{
 		super(firstName, lastName, email, password);
 		// TODO Auto-generated constructor stub
 	}
+
+	public List<Review> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
+	}
 	
 	
 	
