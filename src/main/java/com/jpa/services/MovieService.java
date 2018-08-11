@@ -35,7 +35,7 @@ public class MovieService {
 	public Movie createMovie(@RequestBody Movie movie) {
 		Optional<Movie> omovie = movieRepository.findById(movie.getId());
 		if(omovie.isPresent()) {
-			return null;
+			return omovie.get();
 		}
 		return movieRepository.save(movie);
 	}
