@@ -43,8 +43,8 @@ public class Movie{
 	private List<Director> directors = null;
 
 	
-	@ManyToMany(mappedBy="movies", cascade=CascadeType.ALL)
-	private List<User> users = null;
+//	@ManyToMany(mappedBy="movies", cascade=CascadeType.ALL)
+//	private List<User> users = null;
 	
 	@ManyToMany(mappedBy="movies", cascade=CascadeType.ALL)
 	@JsonIgnore
@@ -53,6 +53,9 @@ public class Movie{
 	@OneToMany(mappedBy = "movie")
 	@JsonIgnore
 	private List<Link> buyLink;
+	
+	@OneToMany(mappedBy = "movie")
+	private List<Watchlist> watchlist;
 
 	public Movie() {
 		super();
@@ -87,12 +90,12 @@ public class Movie{
 	}
 	
 	
-	public List<User> getUsers() {
-		return users;
-	}
-	public void setUsers(List<User> users) {
-		this.users = users;
-	}
+//	public List<User> getUsers() {
+//		return users;
+//	}
+//	public void setUsers(List<User> users) {
+//		this.users = users;
+//	}
 	
 	public List<Review> getReviews() {
 		return reviews;

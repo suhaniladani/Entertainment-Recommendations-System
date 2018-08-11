@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jpa.models.Link;
 import com.jpa.models.Movie;
 import com.jpa.models.Seller;
-import com.jpa.models.User;
 import com.jpa.repositories.LinkRepository;
 import com.jpa.repositories.MovieRepository;
 import com.jpa.repositories.SellerRepository;

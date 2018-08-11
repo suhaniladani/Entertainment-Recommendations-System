@@ -97,69 +97,69 @@ public class UserService {
 	}
 	
 	
-	@PostMapping("/api/user/{uId}/movie")
-	public List<Movie> UserWatchlistMovie(
-			@PathVariable("uId") int uId,
-			@RequestBody Movie a) {
-		Optional<User> ouser = userRepository.findById(uId);
-		
-		Optional<Movie> omovie = movieRepository.findByImdbId(a.getImdbid());
-		
-		List<Movie> empty = new ArrayList();
-		
-		if(ouser.isPresent()) {
-			
-		System.out.println("user found");
-			User u = ouser.get();
-			List<Movie> movies = u.getMovies();
-			
-			if(omovie.isPresent()) {
-				
-				System.out.println("movie found");
-				Movie movie = omovie.get();
-				if(movies.contains(movie)) {
-					return movies;
-				} else {
-					movies.add(movie);
-					u.setMovies(movies);
-					userRepository.save(u);
-					return movies;
-				}
-			} else {
-			
-				System.out.println("movie not found");
-				Movie m1 = new Movie();
-				m1.setTitle(a.getTitle());
-				m1.setImdbId(a.getImdbid());
-				movieRepository.save(m1);
-				System.out.println("movie created");
-				Optional<Movie> k = movieRepository.findByImdbId(a.getImdbid());
-				movies.add(k.get());
-				System.out.println("movie found after creating");
-				u.setMovies(movies);
-				//System.out.println("adding to watchlist");
-				//u.watchlistMovie(k.get());
-				//System.out.println("after watchlist");
-				System.out.println("movie added to list");
-				userRepository.save(u);
-				System.out.println("return movies after saving");
-				return movies;
-			}
-		}
-		return empty;
-	}
-	
-	
-	@GetMapping("/api/user/{uId}/watchlist")
-	public Iterable<Movie> findMoviesInWatchlist(
-						@PathVariable("uId") int uId) {
-		Optional<User> ouser = userRepository.findById(uId);
-		if(ouser.isPresent()) {
-			User user = ouser.get();
-			return user.getMovies();
-		}
-		return null;
-	}
+//	@PostMapping("/api/user/{uId}/movie")
+//	public List<Movie> UserWatchlistMovie(
+//			@PathVariable("uId") int uId,
+//			@RequestBody Movie a) {
+//		Optional<User> ouser = userRepository.findById(uId);
+//		
+//		Optional<Movie> omovie = movieRepository.findByImdbId(a.getImdbid());
+//		
+//		List<Movie> empty = new ArrayList();
+//		
+//		if(ouser.isPresent()) {
+//			
+//		System.out.println("user found");
+//			User u = ouser.get();
+//			List<Movie> movies = u.getMovies();
+//			
+//			if(omovie.isPresent()) {
+//				
+//				System.out.println("movie found");
+//				Movie movie = omovie.get();
+//				if(movies.contains(movie)) {
+//					return movies;
+//				} else {
+//					movies.add(movie);
+//					u.setMovies(movies);
+//					userRepository.save(u);
+//					return movies;
+//				}
+//			} else {
+//			
+//				System.out.println("movie not found");
+//				Movie m1 = new Movie();
+//				m1.setTitle(a.getTitle());
+//				m1.setImdbId(a.getImdbid());
+//				movieRepository.save(m1);
+//				System.out.println("movie created");
+//				Optional<Movie> k = movieRepository.findByImdbId(a.getImdbid());
+//				movies.add(k.get());
+//				System.out.println("movie found after creating");
+//				u.setMovies(movies);
+//				//System.out.println("adding to watchlist");
+//				//u.watchlistMovie(k.get());
+//				//System.out.println("after watchlist");
+//				System.out.println("movie added to list");
+//				userRepository.save(u);
+//				System.out.println("return movies after saving");
+//				return movies;
+//			}
+//		}
+//		return empty;
+//	}
+//	
+//	
+//	@GetMapping("/api/user/{uId}/watchlist")
+//	public Iterable<Movie> findMoviesInWatchlist(
+//						@PathVariable("uId") int uId) {
+//		Optional<User> ouser = userRepository.findById(uId);
+//		if(ouser.isPresent()) {
+//			User user = ouser.get();
+//			return user.getMovies();
+//		}
+//		return null;
+//	}
 }
 		
 
