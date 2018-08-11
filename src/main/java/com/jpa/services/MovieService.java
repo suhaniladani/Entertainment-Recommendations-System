@@ -33,6 +33,10 @@ public class MovieService {
 	
 	@PostMapping("/api/movie")
 	public Movie createMovie(@RequestBody Movie movie) {
+		Optional<Movie> omovie = movieRepository.findById(movie.getId());
+		if(omovie.isPresent()) {
+			return null;
+		}
 		return movieRepository.save(movie);
 	}
 	
