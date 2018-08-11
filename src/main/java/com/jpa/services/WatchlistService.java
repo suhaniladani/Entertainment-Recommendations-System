@@ -1,9 +1,11 @@
 package com.jpa.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jpa.models.Movie;
 import com.jpa.models.Person;
+
 import com.jpa.models.User;
 import com.jpa.models.Watchlist;
 import com.jpa.repositories.MovieRepository;
@@ -66,6 +69,17 @@ public class WatchlistService {
 			watchlist.setWatched(!watchlist.getWatched());
 			watchlistRepository.save(watchlist);
 		}
+	}
+	
+	@GetMapping("/api/person/{pid}/watchlist")
+	public List<Watchlist> findWatchlist(
+						@PathVariable("pid") int pid) {
+		Optional<Person> operson = personRepository.findById(pid);
+		if(operson.isPresent()) {
+			Person person = operson.get();
+			return person.getWatchlist();
+		}
+		return null;
 	}
 
 }
