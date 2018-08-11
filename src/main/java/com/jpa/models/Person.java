@@ -2,12 +2,15 @@ package com.jpa.models;
 
 
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 
 
 
@@ -24,7 +27,8 @@ public class Person {
 	private String password;
 	private String obj;
 
-
+	@OneToMany(mappedBy = "person")
+	private List<Watchlist> watchlist;
 	
 	public int getId() {
 		return id;
@@ -56,6 +60,14 @@ public class Person {
 	}
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+	
+	public List<Watchlist> getWatchlist() {
+		return watchlist;
+	}
+
+	public void setWatchlist(List<Watchlist> watchlist) {
+		this.watchlist = watchlist;
 	}
 	
 	public Person(String firstName, String lastName, String email, String password) {

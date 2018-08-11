@@ -22,7 +22,7 @@ public class Watchlist {
 	
 	@ManyToOne
 	@JsonIgnore
-	private User user;
+	private Person person;
 	
 	@Column(columnDefinition="tinyint(1) default 0")
 	private boolean watched;
@@ -43,13 +43,16 @@ public class Watchlist {
 		this.movie = movie;
 	}
 
-	public User getUser() {
-		return user;
+
+	public Person getPerson() {
+		return person;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setPerson(Person person) {
+		this.person = person;
 	}
+
+
 
 	public Boolean getWatched() {
 		return watched;

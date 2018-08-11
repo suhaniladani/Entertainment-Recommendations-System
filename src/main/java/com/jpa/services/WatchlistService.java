@@ -6,13 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jpa.models.Movie;
+import com.jpa.models.Person;
 import com.jpa.models.User;
 import com.jpa.models.Watchlist;
 import com.jpa.repositories.MovieRepository;
+import com.jpa.repositories.PersonRepository;
 import com.jpa.repositories.UserRepository;
 import com.jpa.repositories.WatchlistRepository;
 
@@ -29,21 +31,41 @@ public class WatchlistService {
 	@Autowired
 	WatchlistRepository watchlistRepository;
 	
-	@PostMapping("/api/movie/{imdbid}/user/{uid}/watchlist")
+	@Autowired
+	PersonRepository personRepository;
+	
+	@PostMapping("/api/movie/{imdbid}/person/{pid}/watchlist")
 	public Watchlist createWatchlist(
 			@PathVariable("imdbid") String imdbid,
-			@PathVariable("uid") int uid,
-			@RequestBody Watchlist watchlist) {
+			@PathVariable("pid") int pid) {
 		Optional<Movie> omovie = movieRepository.findByImdbId(imdbid);
-		Optional<User> ouser = userRepository.findById(uid);
-		if(omovie.isPresent() && ouser.isPresent()) {
+		Optional<Person> operson = personRepository.findById(pid);
+		if(omovie.isPresent() && operson.isPresent()) {
 			Movie movie = omovie.get();
-			User user = ouser.get();
+			Person person = operson.get();
+			Watchlist watchlist = new Watchlist();
 			watchlist.setMovie(movie);
-			watchlist.setUser(user);
+			watchlist.setPerson(person);
 			return watchlistRepository.save(watchlist);
 		}
 		return null;		
+	}
+	
+	@PutMapping("/api/movie/{imdbid}/person/{pid}/watchlist")
+	public void watchlistedMovies(
+			@PathVariable("imdbid") String imdbid,
+			@PathVariable("pid") int pid) {
+		Optional<Movie> omovie = movieRepository.findByImdbId(imdbid);
+		Optional<User> operson = userRepository.findById(pid);
+	
+		if(omovie.isPresent() && operson.isPresent()) {
+			Movie movie = omovie.get();
+			Person person = operson.get();
+			Optional<Watchlist> owatchlist = watchlistRepository.findWatchlistByUserMovie(person, movie);
+			Watchlist watchlist = owatchlist.get();
+			watchlist.setWatched(!watchlist.getWatched());
+			watchlistRepository.save(watchlist);
+		}
 	}
 
 }

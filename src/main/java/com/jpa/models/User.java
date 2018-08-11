@@ -19,8 +19,6 @@ public class User extends Person{
 //	@JoinTable(name="USER2MOVIE")
 //	private List<Movie> movies;
 	
-	@OneToMany(mappedBy = "user")
-	private List<Watchlist> watchlist;
 
 	public User() {
 		super();
@@ -31,6 +29,8 @@ public class User extends Person{
 		super(firstName, lastName, email, password);
 		// TODO Auto-generated constructor stub
 	}
+
+
 
 //	public void watchlistMovie(Movie movie) {
 //		if(movie != null) {
