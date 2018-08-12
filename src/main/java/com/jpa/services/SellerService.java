@@ -1,6 +1,6 @@
 package com.jpa.services;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -8,9 +8,11 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -156,6 +158,33 @@ public class SellerService {
 			return linkRepository.save(link);
 		}
 		return null;		
+	}
+	
+	@DeleteMapping("/api/link/{lid}")
+	public void deleteLink(@PathVariable("lid") int lid) {
+		linkRepository.deleteById(lid);
+	}
+	
+	@PutMapping("/api/link/{lid}")
+	public void updateMovieLinks(
+			@PathVariable int lid,
+			@RequestBody Link link) {
+			Optional<Link> olink = linkRepository.findById(lid);
+			Link l = olink.get();
+			l.setLink(link.getLink());
+			linkRepository.save(l);
+		
+	}
+	
+	@GetMapping("/api/movie/{imdbid}/link")
+	public List<Link> findAllLinksForMovie(
+			@PathVariable("imdbid") String imdbid){
+		Optional<Movie> omovie = movieRepository.findByImdbId(imdbid);
+		if(omovie.isPresent()) {
+			Movie movie = omovie.get();
+			return movie.getBuyLink();
+		}
+		return null;
 	}
 
 }
