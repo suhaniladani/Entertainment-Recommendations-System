@@ -87,7 +87,16 @@ public class ReviewService {
 	}
 	
 	
-	
+	@GetMapping("/api/critic/{cid}/review")
+	public List<Review> findReviewsForCritic(
+			@PathVariable int cid){
+		Optional<Critic> ocritic = criticRepository.findById(cid);
+		if(ocritic.isPresent()) {
+			Critic critic = ocritic.get();
+			return critic.getReviews();
+		}
+		return null;
+	}
 	
 
 }
