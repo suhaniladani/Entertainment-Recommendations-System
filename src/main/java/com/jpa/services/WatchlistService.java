@@ -61,7 +61,7 @@ public class WatchlistService {
 			@PathVariable("imdbid") String imdbid,
 			@PathVariable("pid") int pid) {
 		Optional<Movie> omovie = movieRepository.findByImdbId(imdbid);
-		Optional<User> operson = userRepository.findById(pid);
+		Optional<Person> operson = personRepository.findById(pid);
 	
 		if(omovie.isPresent() && operson.isPresent()) {
 			Movie movie = omovie.get();
