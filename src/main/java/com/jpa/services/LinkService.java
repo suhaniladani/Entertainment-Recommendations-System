@@ -1,5 +1,6 @@
 package com.jpa.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -88,6 +89,18 @@ public class LinkService {
 			Movie movie = omovie.get();
 			Seller seller = oseller.get();
 			return linkRepository.findLinkByMovieSeller(movie, seller);
+		}
+		return null;
+	}
+	
+	@GetMapping("/api/seller/{sId}/linklist")
+	public Iterable<Link> findLinksForSeller(
+						@PathVariable("sId") int sId) {
+		Optional<Seller> oseller = sellerRepository.findById(sId);
+		if(oseller.isPresent()) {
+			Seller seller = oseller.get();
+			return seller.getLink();
+			
 		}
 		return null;
 	}
