@@ -20,6 +20,10 @@ public class Link {
 	@ManyToOne
 	@JsonIgnore
 	private Movie movie;
+	
+	@ManyToOne
+	@JsonIgnore
+	private Seller seller;
 
 	public int getId() {
 		return id;
@@ -44,6 +48,16 @@ public class Link {
 	public void setMovie(Movie movie) {
 		this.movie = movie;
 	}
+
+	public Seller getSeller() {
+		return seller;
+	}
+
+	public void setSeller(Seller seller) {
+		this.seller = seller;
+	}
+	
+	
 	
 
 }

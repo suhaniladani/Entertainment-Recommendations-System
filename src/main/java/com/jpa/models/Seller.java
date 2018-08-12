@@ -2,30 +2,29 @@ package com.jpa.models;
 
 import java.util.List;
 
-
 import javax.persistence.Entity;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+
+import javax.persistence.OneToMany;
 
 @Entity
 public class Seller extends Person{
 	
-	@ManyToMany
-	@JoinTable(name="SELLER2MOVIES")
-	private List<Movie> movies;
+	
+	@OneToMany(mappedBy = "seller")
+	private List<Link> link;
 
-	public List<Movie> getMovies() {
-		return movies;
+
+	
+
+	public List<Link> getLink() {
+		return link;
 	}
 
-	public void setMovies(List<Movie> movies) {
-		this.movies = movies;
+	public void setLink(List<Link> link) {
+		this.link = link;
 	}
 
-	public Seller(String firstName, String lastName, String email, String password, List<Movie> movies) {
-		super(firstName, lastName, email, password);
-		this.movies = movies;
-	}
+
 
 	public Seller() {
 		super();

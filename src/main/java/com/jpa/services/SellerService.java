@@ -1,6 +1,7 @@
 package com.jpa.services;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -111,80 +112,68 @@ public class SellerService {
 //	}
 	
 	
-	@PostMapping("/api/seller/{sId}/movie/{imdbid}")
-	public List<Movie> SellerSellList(
-			@PathVariable("sId") int sId,
-			@PathVariable("imdbid") String imdbid) {
-		Optional<Movie> omovie = movieRepository.findByImdbId(imdbid);
-		Optional<Seller> oseller = sellerRepository.findById(sId);
-		if(oseller.isPresent() && omovie.isPresent()) {
-			Seller seller = oseller.get();
-			Movie movie = omovie.get();
-			List<Movie> movies = seller.getMovies();
-			if(movies.contains(movie)) {
-				return movies;
-			} else {
-				movies.add(movie);
-				seller.setMovies(movies);
-				sellerRepository.save(seller);
-				return movies;
-			}
-			
-		}
-		return null;
-	}
+//	@PostMapping("/api/seller/{sId}/movie/{imdbid}")
+//	public List<Movie> SellerSellList(
+//			@PathVariable("sId") int sId,
+//			@PathVariable("imdbid") String imdbid) {
+//		Optional<Movie> omovie = movieRepository.findByImdbId(imdbid);
+//		Optional<Seller> oseller = sellerRepository.findById(sId);
+//		if(oseller.isPresent() && omovie.isPresent()) {
+//			Seller seller = oseller.get();
+//			Movie movie = omovie.get();
+//			List<Movie> movies = seller.getMovies();
+//			if(movies.contains(movie)) {
+//				return movies;
+//			} else {
+//				movies.add(movie);
+//				seller.setMovies(movies);
+//				sellerRepository.save(seller);
+//				return movies;
+//			}
+//			
+//		}
+//		return null;
+//	}
 	
 	
 	@GetMapping("/api/seller/{sId}/movielist")
 	public Iterable<Movie> findMoviesToRent(
 						@PathVariable("sId") int sId) {
 		Optional<Seller> oseller = sellerRepository.findById(sId);
+		List<Movie> movies = new ArrayList<>();
 		if(oseller.isPresent()) {
 			Seller seller = oseller.get();
-			return seller.getMovies();
+			List<Link> links = seller.getLink();
+			for(Link l : links) {
+				movies.add(l.getMovie());
+			}
+			return movies;
 		}
 		return null;
 	}
 	
-	@PostMapping("/api/movie/{imdbid}/link")
-	public Link createLink(
-			@PathVariable("imdbid") String imdbid,
-			@RequestBody Link link) {
-		Optional<Movie> omovie = movieRepository.findByImdbId(imdbid);
-		
-		if(omovie.isPresent()) {
-			Movie movie = omovie.get();
-			link.setMovie(movie);
-			return linkRepository.save(link);
-		}
-		return null;		
-	}
+//	@PostMapping("/api/movie/{imdbid}/link")
+//	public Link createLink(
+//			@PathVariable("imdbid") String imdbid,
+//			@RequestBody Link link) {
+//		Optional<Movie> omovie = movieRepository.findByImdbId(imdbid);
+//		
+//		if(omovie.isPresent()) {
+//			Movie movie = omovie.get();
+//			link.setMovie(movie);
+//			return linkRepository.save(link);
+//		}
+//		return null;		
+//	}
 	
-	@DeleteMapping("/api/link/{lid}")
-	public void deleteLink(@PathVariable("lid") int lid) {
-		linkRepository.deleteById(lid);
-	}
 	
-	@PutMapping("/api/link/{lid}")
-	public void updateMovieLinks(
-			@PathVariable int lid,
-			@RequestBody Link link) {
-			Optional<Link> olink = linkRepository.findById(lid);
-			Link l = olink.get();
-			l.setLink(link.getLink());
-			linkRepository.save(l);
-		
-	}
 	
-	@GetMapping("/api/movie/{imdbid}/link")
-	public List<Link> findAllLinksForMovie(
-			@PathVariable("imdbid") String imdbid){
-		Optional<Movie> omovie = movieRepository.findByImdbId(imdbid);
-		if(omovie.isPresent()) {
-			Movie movie = omovie.get();
-			return movie.getBuyLink();
-		}
-		return null;
+	
+	
+	
+	@GetMapping("/api/seller")
+	public List<Seller> findAllSellers(){
+		return (List<Seller>) sellerRepository.findAll();
 	}
 
 }

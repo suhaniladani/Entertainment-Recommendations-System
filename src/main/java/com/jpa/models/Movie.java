@@ -46,9 +46,9 @@ public class Movie{
 //	@ManyToMany(mappedBy="movies", cascade=CascadeType.ALL)
 //	private List<User> users = null;
 	
-	@ManyToMany(mappedBy="movies", cascade=CascadeType.ALL)
-	@JsonIgnore
-	private List<Seller> sellers = null;
+//	@ManyToMany(mappedBy="movies", cascade=CascadeType.ALL)
+//	@JsonIgnore
+//	private List<Seller> sellers = null;
 	
 	@OneToMany(mappedBy = "movie")
 	@JsonIgnore
@@ -103,12 +103,7 @@ public class Movie{
 	public void setReviews(List<Review> reviews) {
 		this.reviews = reviews;
 	}
-	public List<Seller> getSellers() {
-		return sellers;
-	}
-	public void setSellers(List<Seller> sellers) {
-		this.sellers = sellers;
-	}
+
 	public void setDirectors(List<Director> directors) {
 		this.directors = directors;
 		for(Director director: directors) {

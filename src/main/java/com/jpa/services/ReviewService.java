@@ -36,13 +36,13 @@ public class ReviewService {
 	CriticRepository criticRepository;
 	
 
-	@PostMapping("/api/movie/{mid}/critic/{cId}/review")
+	@PostMapping("/api/movie/{imdbid}/critic/{cId}/review")
 	public Review WriteReviewForMovie(
 			@PathVariable("cId") int cId,
-			@PathVariable("mId") int mId,
+			@PathVariable("imdbid") String imdbid,
 			@RequestBody Review review) {
 		Optional<Critic> ocritic = criticRepository.findById(cId);
-		Optional<Movie> omovie = movieRepository.findById(mId);
+		Optional<Movie> omovie = movieRepository.findByImdbId(imdbid);
 		if(ocritic.isPresent() && omovie.isPresent()) {
 		Critic critic = ocritic.get();
 		Movie movie = omovie.get();
