@@ -6,8 +6,11 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +20,7 @@ import com.jpa.models.Review;
 import com.jpa.repositories.CriticRepository;
 import com.jpa.repositories.MovieRepository;
 import com.jpa.repositories.ReviewRepository;
+
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -32,52 +36,53 @@ public class ReviewService {
 	CriticRepository criticRepository;
 	
 
-	@PostMapping("/api/review/movie/{mid}/critic/{cId}")
+	@PostMapping("/api/movie/{mid}/critic/{cId}/review")
 	public Review WriteReviewForMovie(
 			@PathVariable("cId") int cId,
 			@PathVariable("mId") int mId,
 			@RequestBody Review review) {
 		Optional<Critic> ocritic = criticRepository.findById(cId);
-		
 		Optional<Movie> omovie = movieRepository.findById(mId);
-		
-		
-		if(ocritic.isPresent()) {
+		if(ocritic.isPresent() && omovie.isPresent()) {
+		Critic critic = ocritic.get();
+		Movie movie = omovie.get();
+		review.setCritic(critic);
+		review.setMovie(movie);
+		return reviewRepository.save(review);
 			
-		System.out.println("critic found");
-			Critic c = ocritic.get();
-			
-			if(omovie.isPresent()) {
-				
-				System.out.println("movie found");
-				Movie movie = omovie.get();
-				List<Review> reviews = movie.getReviews();
-				reviews.add(review);
-				List<Review> criticReviews =c.getReviews();
-				criticReviews.add(review);
-				criticRepository.save(c);
-				return reviewRepository.save(review);
-				
-			} else {
-			
-				System.out.println("movie not found");
-				Movie m1 = new Movie();
-
-				movieRepository.save(m1);
-				System.out.println("movie created");
-				Optional<Movie> k = movieRepository.findById(mId);
-				System.out.println("movie found after creating");
-				List<Review> reviews = k.get().getReviews();
-				reviews.add(review);
-				List<Review> criticReviews =c.getReviews();
-				criticReviews.add(review);
-				criticRepository.save(c);
-				System.out.println("return movies after saving");
-				return reviewRepository.save(review);
-			}
 		}
 		return null;
 	}
+	
+	@GetMapping("/api/movie/{imdbid}/review")
+	public List<Review> findReviewsForMovie(
+			@PathVariable String imdbid){
+		Optional<Movie> omovie = movieRepository.findByImdbId(imdbid);
+		if(omovie.isPresent()) {
+			Movie movie = omovie.get();
+			return movie.getReviews();
+		}
+		return null;
+	}
+	
+	@DeleteMapping("/api/review/{rid}")
+	public void deleteReview(
+			@PathVariable("rid") int rid) {
+		reviewRepository.deleteById(rid);
+		
+	}
+	
+	@PutMapping("/api/review/{rid}")
+	public Review updateReview(
+			@PathVariable("rid") int rid,
+			@RequestBody Review review) {
+		review.setTitle(review.getTitle());
+		review.setDescription(review.getDescription());
+		return reviewRepository.save(review);
+	}
+	
+	
+	
 	
 
 }

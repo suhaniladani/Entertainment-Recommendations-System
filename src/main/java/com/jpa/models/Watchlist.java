@@ -17,13 +17,14 @@ public class Watchlist {
 	private int id;
 	
 	@ManyToOne
-	@JsonIgnore
+//	@JsonIgnore
 	private Movie movie;
 	
 	@ManyToOne
 	@JsonIgnore
 	private Person person;
 	
+
 	@Column(columnDefinition="tinyint(1) default 0")
 	private boolean watched;
 
