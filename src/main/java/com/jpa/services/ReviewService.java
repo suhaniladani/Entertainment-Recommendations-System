@@ -76,9 +76,14 @@ public class ReviewService {
 	public Review updateReview(
 			@PathVariable("rid") int rid,
 			@RequestBody Review review) {
-		review.setTitle(review.getTitle());
-		review.setDescription(review.getDescription());
-		return reviewRepository.save(review);
+		Optional<Review> oreview = reviewRepository.findById(rid);
+		if(oreview.isPresent()) {
+			Review review1 = oreview.get();
+			review1.setTitle(review.getTitle());
+			review1.setDescription(review.getDescription());
+			return reviewRepository.save(review1);
+		}
+		return null;
 	}
 	
 	
