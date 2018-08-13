@@ -18,7 +18,7 @@ public class Link {
 	private String link;
 	
 	@ManyToOne
-	@JsonIgnore
+	//@JsonIgnore
 	private Movie movie;
 	
 	@ManyToOne
