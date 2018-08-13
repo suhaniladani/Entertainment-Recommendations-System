@@ -18,7 +18,7 @@ public class Review {
 	private String description;
 	
 	@ManyToOne
-	@JsonIgnore
+	//@JsonIgnore
 	private Movie movie;
 	
 	@ManyToOne

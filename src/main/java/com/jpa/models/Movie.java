@@ -31,6 +31,7 @@ public class Movie{
 	private String imdbid;
 
 	@OneToMany(mappedBy="movie")
+	@JsonIgnore
 	private List<Review> reviews;
 
 	
