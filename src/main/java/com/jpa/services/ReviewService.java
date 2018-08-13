@@ -98,5 +98,11 @@ public class ReviewService {
 		return null;
 	}
 	
+	@GetMapping("/api/review/{rid}")
+	public Optional<Review> findReviewById(
+			@PathVariable("rid") int rid) {
+		return reviewRepository.findById(rid);
+	}
+	
 
 }
