@@ -35,15 +35,6 @@ public class Movie{
 	private List<Review> reviews;
 
 	
-	@ManyToMany
-	@JoinTable(name="MOVIE2ACTOR")
-	private List<Actor> actors = null;
-	
-	@ManyToMany
-	@JoinTable(name="MOVIE2DIRECTOR")
-	private List<Director> directors = null;
-
-	
 //	@ManyToMany(mappedBy="movies", cascade=CascadeType.ALL)
 //	private List<User> users = null;
 	
@@ -77,18 +68,6 @@ public class Movie{
 		this.title = title;
 	}
 
-	public List<Actor> getActors() {
-		return actors;
-	}
-	public void setActors(List<Actor> actors) {
-		this.actors = actors;
-		for(Actor actor: actors) {
-			actor.getMoviesActed().add(this);
-		}
-	}
-	public List<Director> getDirectors() {
-		return directors;
-	}
 	
 	
 //	public List<User> getUsers() {
@@ -105,12 +84,7 @@ public class Movie{
 		this.reviews = reviews;
 	}
 
-	public void setDirectors(List<Director> directors) {
-		this.directors = directors;
-		for(Director director: directors) {
-			director.getMoviesDirected().add(this);
-		}
-	}
+
 	public String getImdbid() {
 		return imdbid;
 	}
