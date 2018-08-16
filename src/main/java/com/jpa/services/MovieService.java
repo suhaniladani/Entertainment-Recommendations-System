@@ -35,11 +35,10 @@ public class MovieService {
 	public Movie createMovie(@RequestBody Movie movie) {
 		Optional<Movie> m = movieRepository.findByImdbId(movie.getImdbid());
 		if(m.isPresent()){
-			return m.get();
+			return movieRepository.findByImdbId(m.get().getImdbid()).get();
 		}
 		else {
-			Movie m1 = m.get();
-			return movieRepository.save(m1);
+			return movieRepository.save(movie);
 		}
 			
 
