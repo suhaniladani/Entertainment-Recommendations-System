@@ -33,8 +33,15 @@ public class MovieService {
 	
 	@PostMapping("/api/movie")
 	public Movie createMovie(@RequestBody Movie movie) {
-
-			return movieRepository.save(movie);
+		Optional<Movie> m = movieRepository.findByImdbId(movie.getImdbid());
+		if(m.isPresent()){
+			return null;
+		}
+		else {
+			Movie m1 = m.get();
+			return movieRepository.save(m1);
+		}
+			
 
 	}
 	
