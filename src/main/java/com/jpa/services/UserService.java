@@ -1,7 +1,6 @@
 package com.jpa.services;
 
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,9 +16,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jpa.models.Critic;
 import com.jpa.models.Movie;
+import com.jpa.models.Review;
 //import com.jpa.daos.UserDao;
 import com.jpa.models.User;
+import com.jpa.repositories.CriticRepository;
 import com.jpa.repositories.MovieRepository;
 import com.jpa.repositories.UserRepository;
 //import com.jpa.security.WebSecurityConfig;
@@ -34,6 +36,9 @@ public class UserService {
 //	
 //	@Autowired
 //	UserDao userDao;
+	
+	@Autowired
+	CriticRepository criticRepository;
 	
 	@Autowired
 	MovieRepository movieRepository;
@@ -97,7 +102,38 @@ public class UserService {
 	}
 	
 	
+	@PostMapping("/api/user/{uId}/critic/{cId}")
+	public User followCritic(
+			@PathVariable("uId") int uId,
+			@PathVariable("cId") int cId) {
+		Optional<Critic> ocritic = criticRepository.findById(cId);
+		Optional<User> ouser = userRepository.findById(uId);
+		if(ocritic.isPresent() && ouser.isPresent()) {
+		Critic critic = ocritic.get();
+		User user = ouser.get();
+		List<Critic> c = user.getCritic();
+		c.add(critic);
+		user.setCritic(c);
+		List<User> u = critic.getUser();
+		u.add(user);
+		critic.setUser(u);
+		criticRepository.save(critic);
+		return userRepository.save(user);
+			
+		}
+		return null;
+	}
 	
+	@GetMapping("/api/user/{uId}/critic")
+	public List<Critic> findCriticsfollowed(
+			@PathVariable("uId") int uId) {
+		Optional<User> ouser = userRepository.findById(uId);
+		if(ouser.isPresent()) {
+			User user = ouser.get();
+			return user.getCritic();
+		}
+		return null;
+	}
 	
 //	@PostMapping("/api/user/{uId}/movie")
 //	public List<Movie> UserWatchlistMovie(

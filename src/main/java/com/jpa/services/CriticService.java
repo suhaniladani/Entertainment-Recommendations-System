@@ -1,14 +1,20 @@
 package com.jpa.services;
 
+import java.util.List;
+import java.util.Optional;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jpa.models.Critic;
+import com.jpa.models.User;
 import com.jpa.repositories.CriticRepository;
 //import com.jpa.security.WebSecurityConfig;
 
@@ -32,6 +38,17 @@ public class CriticService {
 		session.setAttribute("currentCritic", cc);
 		
 		return cc;
+	}
+	
+	@GetMapping("/api/critic/{cid}/user")
+	public List<User> findUserfollowers(
+			@PathVariable("cid") int cid) {
+		Optional<Critic> ocritic = criticRepository.findById(cid);
+		if(ocritic.isPresent()) {
+			Critic critic = ocritic.get();
+			return critic.getUser();
+		}
+		return null;
 	}
 	
 	

@@ -19,6 +19,11 @@ public class User extends Person{
 //	@JoinTable(name="USER2MOVIE")
 //	private List<Movie> movies;
 	
+	@ManyToMany
+	@JsonIgnore
+	@JoinTable(name="USER2CRITIC")
+	private List<Critic> critic;
+	
 
 	public User() {
 		super();
@@ -30,6 +35,15 @@ public class User extends Person{
 		// TODO Auto-generated constructor stub
 	}
 
+	public List<Critic> getCritic() {
+		return critic;
+	}
+
+	public void setCritic(List<Critic> critic) {
+		this.critic = critic;
+	}
+
+	
 
 
 //	public void watchlistMovie(Movie movie) {
