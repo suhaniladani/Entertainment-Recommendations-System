@@ -45,10 +45,12 @@ public class MovieService {
 
 	}
 	
-	@DeleteMapping("/api/movie/{mid}")
+	@DeleteMapping("/api/movie/{imdbid}")
 	public void deleteMovie(
-			@PathVariable("mid") int mid) {
-		movieRepository.deleteById(mid);
+			@PathVariable("imdbid") String imdbid) {
+		Optional<Movie> movie = movieRepository.findByImdbId(imdbid);
+		Movie m = movie.get();
+		movieRepository.deleteById(m.getId());
 	}
 	
 
