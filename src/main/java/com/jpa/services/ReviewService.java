@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jpa.models.Critic;
+import com.jpa.models.Link;
 import com.jpa.models.Movie;
 import com.jpa.models.Review;
 import com.jpa.repositories.CriticRepository;
@@ -102,6 +103,11 @@ public class ReviewService {
 	public Optional<Review> findReviewById(
 			@PathVariable("rid") int rid) {
 		return reviewRepository.findById(rid);
+	}
+	
+	@GetMapping("/api/review")
+	public List<Review> findAllReviews() {
+		return (List<Review>) reviewRepository.findAll();
 	}
 	
 

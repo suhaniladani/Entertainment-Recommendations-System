@@ -22,7 +22,7 @@ public class Review {
 	private Movie movie;
 	
 	@ManyToOne
-	@JsonIgnore
+	//@JsonIgnore
 	private Critic critic;
 
 	public Review(String title, String description, Movie movie, Critic critic) {

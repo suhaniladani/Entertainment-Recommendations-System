@@ -110,5 +110,9 @@ public class LinkService {
 			@PathVariable("lid") int lid) {
 		return linkRepository.findById(lid);
 	}
-
+	
+	@GetMapping("/api/link")
+	public List<Link> findAllLinks() {
+		return (List<Link>) linkRepository.findAll();
+	}
 }
