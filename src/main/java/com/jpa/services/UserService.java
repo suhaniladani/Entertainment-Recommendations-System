@@ -135,6 +135,21 @@ public class UserService {
 		return null;
 	}
 	
+	@DeleteMapping("/api/user/{uid}/critic/{cid}")
+		public void deleteCritic(
+				@PathVariable("cid") int cid,
+				@PathVariable("uid") int uid) {
+		Optional<Critic> ocritic = criticRepository.findById(cid);
+		Optional<User> ouser = userRepository.findById(uid);
+			List<Critic> c = ouser.get().getCritic();
+			c.remove(ocritic.get());
+			List<User> u = ocritic.get().getUser();
+			u.remove(ouser.get());
+			userRepository.save(ouser.get());
+			criticRepository.save(ocritic.get());
+		}
+	
+	
 //	@PostMapping("/api/user/{uId}/movie")
 //	public List<Movie> UserWatchlistMovie(
 //			@PathVariable("uId") int uId,
