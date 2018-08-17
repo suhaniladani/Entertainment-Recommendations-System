@@ -4,6 +4,7 @@ package com.jpa.models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,7 +28,7 @@ public class Person {
 	private String password;
 	private String obj;
 
-	@OneToMany(mappedBy = "person")
+	@OneToMany(mappedBy = "person", cascade=CascadeType.ALL)
 	private List<Watchlist> watchlist;
 	
 	public int getId() {

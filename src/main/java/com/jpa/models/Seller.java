@@ -2,6 +2,7 @@ package com.jpa.models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 
 import javax.persistence.OneToMany;
@@ -10,7 +11,7 @@ import javax.persistence.OneToMany;
 public class Seller extends Person{
 	
 	
-	@OneToMany(mappedBy = "seller")
+	@OneToMany(mappedBy = "seller", cascade=CascadeType.ALL)
 	private List<Link> link;
 
 

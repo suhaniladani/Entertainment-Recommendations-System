@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Critic extends Person{
 
-	@OneToMany(mappedBy="critic")
+	@OneToMany(mappedBy="critic", cascade=CascadeType.ALL)
 	@JsonIgnore
 	private List<Review> reviews;
 	
