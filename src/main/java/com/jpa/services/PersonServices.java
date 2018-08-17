@@ -79,10 +79,12 @@ public class PersonServices {
 		Optional<Person> operson = personRepository.findById(pid);
 		if (operson.isPresent()){
 			Person p = operson.get();
+			System.out.println("firstName"+ person.getFirstName());
 			p.setFirstName(person.getFirstName());
 			p.setLastName(person.getLastName());
 			p.setEmail(person.getEmail());
-			return p;
+			p.setPassword(person.getPassword());
+			return personRepository.save(p);
 		}
 		return null;
 	}

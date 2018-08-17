@@ -80,6 +80,8 @@ public class UserService {
 			User user = optional.get();
 			user.setFirstName(newUser.getFirstName());
 			user.setLastName(newUser.getLastName());
+			user.setEmail(newUser.getEmail());
+			user.setPassword(newUser.getPassword());
 			return userRepository.save(user);
 		}
 		return null;
