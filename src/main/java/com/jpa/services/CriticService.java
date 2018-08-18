@@ -51,6 +51,11 @@ public class CriticService {
 		return null;
 	}
 	
+	@GetMapping("/api/critic")
+	public List<Critic> findAllCritics(){
+		return (List<Critic>) criticRepository.findAll();
+	}
+	
 	
 
 }
