@@ -48,10 +48,17 @@ public class WatchlistService {
 		if(omovie.isPresent() && operson.isPresent()) {
 			Movie movie = omovie.get();
 			Person person = operson.get();
-			Watchlist watchlist = new Watchlist();
-			watchlist.setMovie(movie);
-			watchlist.setPerson(person);
-			return watchlistRepository.save(watchlist);
+			Optional<Watchlist> owatchlist = watchlistRepository.findWatchlistByUserMovie(person, movie);
+			if(owatchlist.isPresent()) {
+				return null;
+			}
+			else {
+				Watchlist watchlist = new Watchlist();
+				watchlist.setMovie(movie);
+				watchlist.setPerson(person);
+				return watchlistRepository.save(watchlist);
+			}
+			
 		}
 		return null;		
 	}
