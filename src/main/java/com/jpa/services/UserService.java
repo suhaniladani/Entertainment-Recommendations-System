@@ -104,52 +104,11 @@ public class UserService {
 	}
 	
 	
-	@PostMapping("/api/user/{uId}/critic/{cId}")
-	public User followCritic(
-			@PathVariable("uId") int uId,
-			@PathVariable("cId") int cId) {
-		Optional<Critic> ocritic = criticRepository.findById(cId);
-		Optional<User> ouser = userRepository.findById(uId);
-		if(ocritic.isPresent() && ouser.isPresent()) {
-		Critic critic = ocritic.get();
-		User user = ouser.get();
-		List<Critic> c = user.getCritic();
-		c.add(critic);
-		user.setCritic(c);
-		List<User> u = critic.getUser();
-		u.add(user);
-		critic.setUser(u);
-		criticRepository.save(critic);
-		return userRepository.save(user);
-			
-		}
-		return null;
-	}
+
 	
-	@GetMapping("/api/user/{uId}/critic")
-	public List<Critic> findCriticsfollowed(
-			@PathVariable("uId") int uId) {
-		Optional<User> ouser = userRepository.findById(uId);
-		if(ouser.isPresent()) {
-			User user = ouser.get();
-			return user.getCritic();
-		}
-		return null;
-	}
 	
-	@DeleteMapping("/api/user/{uid}/critic/{cid}")
-		public void deleteCritic(
-				@PathVariable("cid") int cid,
-				@PathVariable("uid") int uid) {
-		Optional<Critic> ocritic = criticRepository.findById(cid);
-		Optional<User> ouser = userRepository.findById(uid);
-			List<Critic> c = ouser.get().getCritic();
-			c.remove(ocritic.get());
-			List<User> u = ocritic.get().getUser();
-			u.remove(ouser.get());
-			userRepository.save(ouser.get());
-			criticRepository.save(ocritic.get());
-		}
+	
+	
 	
 	
 //	@PostMapping("/api/user/{uId}/movie")

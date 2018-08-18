@@ -17,7 +17,7 @@ public class Critic extends Person{
 	private List<Review> reviews;
 	
 	@ManyToMany(mappedBy="critic", cascade=CascadeType.ALL)
-	private List<User> user;
+	private List<Person> person;
 
 	public Critic(String firstName, String lastName, String email, String password, List<Review> reviews) {
 		super(firstName, lastName, email, password);
@@ -42,13 +42,15 @@ public class Critic extends Person{
 		this.reviews = reviews;
 	}
 
-	public List<User> getUser() {
-		return user;
+	public List<Person> getPerson() {
+		return person;
 	}
 
-	public void setUser(List<User> user) {
-		this.user = user;
+	public void setPerson(List<Person> person) {
+		this.person = person;
 	}
+
+
 	
 	
 	

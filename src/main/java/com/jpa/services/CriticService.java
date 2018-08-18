@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jpa.models.Critic;
+import com.jpa.models.Person;
 import com.jpa.models.User;
 import com.jpa.repositories.CriticRepository;
 //import com.jpa.security.WebSecurityConfig;
@@ -40,13 +41,13 @@ public class CriticService {
 		return cc;
 	}
 	
-	@GetMapping("/api/critic/{cid}/user")
-	public List<User> findUserfollowers(
+	@GetMapping("/api/critic/{cid}/person")
+	public List<Person> findUserfollowers(
 			@PathVariable("cid") int cid) {
 		Optional<Critic> ocritic = criticRepository.findById(cid);
 		if(ocritic.isPresent()) {
 			Critic critic = ocritic.get();
-			return critic.getUser();
+			return critic.getPerson();
 		}
 		return null;
 	}

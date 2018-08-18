@@ -11,7 +11,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 
@@ -27,7 +32,19 @@ public class Person {
 	private String email;
 	private String password;
 	private String obj;
-
+//
+//	@ManyToMany
+//	@JoinTable(name="PERSON2CRITIC", 
+//	joinColumns=@JoinColumn(name="personId"),
+//	inverseJoinColumns = @JoinColumn(name = "criticId"))
+//	private List<Person> person;
+	
+	@ManyToMany
+	@JsonIgnore
+	@JoinTable(name="PERSON2CRITIC")
+	private List<Critic> critic;
+	
+	
 	@OneToMany(mappedBy = "person", cascade=CascadeType.ALL)
 	private List<Watchlist> watchlist;
 	
@@ -94,6 +111,12 @@ public class Person {
 	}
 	public void setObj(String obj) {
 		this.obj = obj;
+	}
+	public List<Critic> getCritic() {
+		return critic;
+	}
+	public void setCritic(List<Critic> critic) {
+		this.critic = critic;
 	}
 	
 	
