@@ -50,7 +50,7 @@ public class WatchlistService {
 			Person person = operson.get();
 			Optional<Watchlist> owatchlist = watchlistRepository.findWatchlistByUserMovie(person, movie);
 			if(owatchlist.isPresent()) {
-				return null;
+				return owatchlist.get();
 			}
 			else {
 				Watchlist watchlist = new Watchlist();
