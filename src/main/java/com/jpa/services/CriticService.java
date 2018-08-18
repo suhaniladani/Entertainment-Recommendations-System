@@ -56,6 +56,14 @@ public class CriticService {
 		return (List<Critic>) criticRepository.findAll();
 	}
 	
-	
+		@GetMapping("/api/critic/{cid}")
+		public Critic findCriticById(
+				@PathVariable("cid") int cid) {
+			Optional<Critic> ocritic =  criticRepository.findById(cid);
+			if(ocritic.isPresent()){
+				return ocritic.get();
+			}
+			return null;
+		}
 
 }
