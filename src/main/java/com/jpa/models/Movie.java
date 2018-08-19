@@ -30,7 +30,7 @@ public class Movie{
 	private String title;
 	private String imdbid;
 
-	@OneToMany(mappedBy="movie")
+	@OneToMany(mappedBy="movie", cascade=CascadeType.ALL)
 	@JsonIgnore
 	private List<Review> reviews;
 
@@ -42,11 +42,11 @@ public class Movie{
 //	@JsonIgnore
 //	private List<Seller> sellers = null;
 	
-	@OneToMany(mappedBy = "movie")
+	@OneToMany(mappedBy = "movie", cascade=CascadeType.ALL)
 	@JsonIgnore
 	private List<Link> buyLink;
 	
-	@OneToMany(mappedBy = "movie")
+	@OneToMany(mappedBy = "movie", cascade=CascadeType.ALL)
 	private List<Watchlist> watchlist;
 
 	public Movie() {

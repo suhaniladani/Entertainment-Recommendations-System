@@ -58,8 +58,8 @@ public class PersonServices {
 	}
 	
 	@GetMapping("/api/person")
-	public List<Person> findAllperson() {
-		return (List<Person>) personRepository.findAll();
+	public Iterable<Person> findAllperson() {
+		return personRepository.findAll();
 	}
 
 	@DeleteMapping("/api/person/{pid}")

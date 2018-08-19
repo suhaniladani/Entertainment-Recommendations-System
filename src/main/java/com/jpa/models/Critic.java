@@ -17,6 +17,7 @@ public class Critic extends Person{
 	private List<Review> reviews;
 	
 	@ManyToMany(mappedBy="critic", cascade=CascadeType.ALL)
+	@JsonIgnore
 	private List<Person> person;
 
 	public Critic(String firstName, String lastName, String email, String password, List<Review> reviews) {
